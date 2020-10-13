@@ -1,6 +1,7 @@
 <script>
 	import { Router, Route, createHistory } from "svelte-navigator";
 	import Home from "./routes/Home.svelte";
+	import About from "./routes/About.svelte";
 	import NavLink from "./components/NavLink.svelte";
 	import PackagePage from "./routes/PackagePage.svelte";
 	import TagPage from "./routes/TagPage.svelte";
@@ -26,12 +27,16 @@
 			<h1><NavLink to="/">zpm</NavLink></h1>
 			<div class="items">
 				<NavLink to="/">Home</NavLink>
+				<NavLink to="/about">About</NavLink>
 			</div>
 		</nav>
 	</div>
 	<main>
 		<Route path="/">
 			<Home fetchData={fetchData}/>
+		</Route>
+		<Route path="/about">
+			<About />
 		</Route>
 		<Route path="package/*">
 			<PackagePage fetchData={fetchData}/>
@@ -80,11 +85,12 @@
 			right: 20px;
 
 			transform: translate(0, -50%);
-
-			& {
-				font-weight: 700;
-			}
 		}
+	}
+
+	:global(nav .items>*) {
+		font-weight: 700;
+		margin-left: 20px;
 	}
 
 	main {

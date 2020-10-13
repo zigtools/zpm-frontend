@@ -1,6 +1,8 @@
 <script>
-	import Tags from "../components/Tags.svelte";
-	import NavLink from "../components/NavLink.svelte";
+	import utils from "../utils";
+	import Tabs from "./Tabs.svelte";
+	import Tags from "./Tags.svelte";
+	import NavLink from "./NavLink.svelte";
 
 	export let pkg;
 	let expanded = false;
@@ -12,6 +14,8 @@
 
 	<p>{pkg.description}</p>
 
+	<pre><code class="block">{pkg.git}</code></pre>
+
 	<Tags tags={pkg.tags} />
 
 	<div class="tooltip">
@@ -22,11 +26,11 @@
 
 	<div class="actions">
 		<NavLink to="/package/{pkg.name}">Details</NavLink>
-		<!-- <a on:click={() => expanded = !expanded}>Install</a> -->
+		<a on:click={() => expanded = !expanded}>Install</a>
 	</div>
 
 	<div class="install {expanded ? "visible" : ""}">
-		<code>zpm install {pkg.name}</code>
+		<Tabs tabs={utils.tabsFromPackage(pkg)} />
 	</div>
 </div>
 
@@ -104,39 +108,22 @@
 		top: 0px;
 		right: 0px;
 
-		display: block;
-		pointer-events: none;
-		opacity: 0;
+		display: none;
 
 		width: 100%;
 		height: calc(100% - 51.67px);
 
-		color: black;
-
-		transition: 0.1s all ease-in-out;
-		background-color: rgba(0, 0, 0, 0.75);
-
-		&.visible {
-			display: block;
-			opacity: 1;
-			pointer-events: all;
-		}
-
-		&>code {
-			position: absolute;
-
-			top: 50%;
-			left: 50%;
-
-			transform: translate(-50%, -50%);
-
-			border-radius: 3px;
-
-			padding: 15px;
-
-			background-color: #e2e2e2;
-		}
+		color: #333;
 
 		z-index: 1;
+		background-color: white;
+
+		&.visible {
+			display: flex;
+		}
+
+		&>div {
+			width: 100%;
+		}
 	}
 </style>

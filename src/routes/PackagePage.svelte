@@ -1,7 +1,8 @@
 <script>
 	import { Router, Route, createHistory } from "svelte-navigator";
-	import { atobUnicode } from "../utils";
+	import utils from "../utils";
 
+	import Tabs from "../components/Tabs.svelte";
 	import Tags from "../components/Tags.svelte";
 	import Markdown from "../components/Markdown.svelte";
 
@@ -13,7 +14,7 @@
 	
 	async function fetchReadme(pkg) {
 		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
-			return atobUnicode((await (await fetch(`https://api.github.com/repos/${pkg.git.replace("https://github.com/", "")}/readme`)).json()).content);	
+			return utils.atobUnicode((await (await fetch(`https://api.github.com/repos/${pkg.git.replace("https://github.com/", "")}/readme`)).json()).content);	
 		}
 
 		return;
@@ -36,6 +37,10 @@
 				{#if pkg.git}
 					<a href={pkg.git}><img src={pkg.git.startsWith("https://github.com") ? "img/github.svg" : "img/git.svg"} alt="git"></a>
 				{/if}
+			</div>
+			
+			<div class="install">
+				<Tabs tabs={utils.tabsFromPackage(pkg)} />
 			</div>
 
 			<div class="sep"></div>
@@ -88,7 +93,18 @@
 		}
 	}
 
+	.install {
+		display: flex;
+
+		border: 2px solid #ececec;
+		border-radius: 5px;
+		
+		overflow: hidden;
+	}
+
 	.sep {
+		margin-top: 20px;
+
 		border-radius: 5px;
 
 		width: 100%;
@@ -96,5 +112,4 @@
 
 		background-color: #ececec;
 	}
-
 </style>
