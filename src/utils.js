@@ -6,6 +6,7 @@ export function atobUnicode(str) {
 
 export function tabsFromPackage(pkg) {
 	return {
+		"git": pkg.git,
 		"submodules": pkg.git ? `git submodule add ${pkg.git} ${pkg.name}` : undefined,
 		"clone": pkg.git ? `git clone ${pkg.git}` : undefined,
 		"zkg": `zkg add ${pkg.name}`

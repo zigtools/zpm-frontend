@@ -29,6 +29,7 @@
 			<h2>{pkg.name}</h2>
 			<h3>{pkg.author}</h3>
 
+			<!-- <pre><code class="block">{pkg.git}</code></pre> -->
 			<Tags tags={pkg.tags}/>
 
 			<p>{pkg.description}</p>
