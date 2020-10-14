@@ -13,8 +13,6 @@
 
 	<p>{pkg.description}</p>
 
-	<pre><code class="block">{pkg.git}</code></pre>
-
 	<Tags tags={pkg.tags} />
 
 	<div class="tooltip">
@@ -53,10 +51,6 @@
 		color: #666;
 		font-size: 12pt;
 		font-weight: 500;
-	}
-
-	p {
-		// margin-bottom: 25px;
 	}
 
 	.tooltip {
