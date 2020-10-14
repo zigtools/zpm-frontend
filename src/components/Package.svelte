@@ -1,6 +1,5 @@
 <script>
 	import utils from "../utils";
-	import Tabs from "./Tabs.svelte";
 	import Tags from "./Tags.svelte";
 	import NavLink from "./NavLink.svelte";
 
@@ -26,11 +25,6 @@
 
 	<div class="actions">
 		<NavLink to="/package/{pkg.name}">Details</NavLink>
-		<a on:click={() => expanded = !expanded}>Install</a>
-	</div>
-
-	<div class="install {expanded ? "visible" : ""}">
-		<Tabs tabs={utils.tabsFromPackage(pkg)} />
 	</div>
 </div>
 
@@ -100,30 +94,5 @@
 		margin-right: 15px;
 
 		font-weight: 700;
-	}
-
-	.install {
-		position: absolute;
-
-		top: 0px;
-		right: 0px;
-
-		display: none;
-
-		width: 100%;
-		height: calc(100% - 51.67px);
-
-		color: #333;
-
-		z-index: 1;
-		background-color: white;
-
-		&.visible {
-			display: flex;
-		}
-
-		&>div {
-			width: 100%;
-		}
 	}
 </style>
