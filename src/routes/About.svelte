@@ -20,7 +20,7 @@
 
 	<h3>How can I integrate zpm with my package mananger or frontend?</h3>
 
-	<p>You can integrate zpm with your package manager or frontend by using the zpm HTTPS API, which is available <a href="https://zpm.random-projects.net/api/">here</a>. Packages are currently provided via any <code>git</code> supported protocol and can be added as a submodule, flat copy or any other way.</p>
+	<p>You can integrate zpm with your package manager or frontend by using the zpm HTTPS API, which is available at <a href="https://zpm.random-projects.net/api/">https://zpm.random-projects.net/api/</a>. Packages are currently provided via any <code>git</code> supported protocol and can be added as a submodule, flat copy or any other way.</p>
 </div>
 
 <style lang="scss">
