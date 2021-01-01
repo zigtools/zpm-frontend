@@ -8,7 +8,7 @@
 	{#await fetchData}
 		<h1>Fetching Packages...</h1>
 	{:then packages}
-		<PackageList packages={packages} />
+		<PackageList {packages}/>
 	{:catch error}
 		<p>Error: <code>{error}</code></p>
 	{/await}
