@@ -32,19 +32,24 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 	overflow-y: scroll;
+	background-color: var(--bg-color);
+	color: var(--text-color);
 }
 
 a {
 	text-decoration: none;
-
 	cursor: pointer;
+	color: var(--text-color-a);
 }
 
-body {
-	background-color: #111;
-	color: #bbb;
+h1 {
+	color: var(--text-color-h1);
 }
 
-a {
-	color: #88f;
+h2 {
+	color: var(--text-color-h2);
+}
+
+h3 {
+	color: var(--text-color-h3);
 }

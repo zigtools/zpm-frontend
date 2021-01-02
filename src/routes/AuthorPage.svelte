@@ -6,10 +6,7 @@
 
 	async function fetchPackagesByAuthor(user) {
 		let data = await fetchData;
-		console.log(data);
-		console.log(user);
 		let result = data.filter((_) => _.author == user);
-		console.log(result);
 		return result;
 	}
 </script>
@@ -38,7 +35,6 @@
 	h2 {
 		margin: 0;
 		font-size: 40pt;
-		color: #fff;
 	}
 
 	h3 {

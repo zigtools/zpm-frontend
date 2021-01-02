@@ -1,11 +1,19 @@
 <script>
 	import NavLink from "./NavLink.svelte";
 	import { searchQuery } from "../stores.js";
+	import { useNavigate } from "svelte-navigator";
+	import { useLocation } from "svelte-navigator";
 
 	let inputRef;
 
-	function onSearchInput(e) {
+	const navigate = useNavigate();
+	let location = useLocation();
+
+	async function onSearchInput(e) {
 		searchQuery.set(e.target.value);
+		if ($location.pathname != "/") {
+			navigate("/", { state: { shouldFocusSearch: true } });
+		}
 	}
 
 	function handleKeydown(e) {
@@ -20,15 +28,13 @@
 
 <div class="container">
 	<nav>
-		<NavLink to="/">
-			<img src="img/zpm.svg" alt="logo" />
-		</NavLink>
+		<NavLink to="/"><img src="img/zpm.svg" alt="logo" /></NavLink>
 		<div class="items">
 			<input
 				bind:this={inputRef}
+				on:input={onSearchInput}
 				type="text"
-				placeholder="Press 's' to search"
-				on:input={onSearchInput} />
+				placeholder="Press 's' to search" />
 			<NavLink to="/about">About</NavLink>
 		</div>
 	</nav>
@@ -36,6 +42,9 @@
 
 <style lang="scss">
 	nav {
+		:global(a) {
+			color: var(--text-color-a-alt);
+		}
 		img {
 			height: 32px;
 		}
@@ -53,18 +62,18 @@
 			font-weight: 600;
 		}
 		input[type="text"] {
-			background-color: #222;
-			border: 2px solid #333;
-			color: #bbb;
+			background-color: var(--color-bg-1);
+			border: 2px solid var(--color-bg-3);
+			color: var(--text-color-h1-alt);
 		}
 
 		input[type="text"]:focus {
-			border-color: #88f;
+			border-color: var(--text-color-a-alt);
 		}
 	}
 
 	.container {
-		background-color: #222;
+		background-color: var(--color-bg-1);
 		width: 100%;
 		padding-bottom: 0;
 		display: inline-block;

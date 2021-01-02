@@ -44,7 +44,6 @@
 	h2 {
 		margin: 0;
 		font-size: 40pt;
-		color: #fff;
 	}
 
 	h3 {

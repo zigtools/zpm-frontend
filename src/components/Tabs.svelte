@@ -56,7 +56,8 @@
 
 <style lang="scss">
 	.block-container {
-		background-color: #222;
+		background-color: var(--color-bg-1);
+		color: var(--text-color-alt);
 
 		.block-content {
 			display: flex;
@@ -68,20 +69,20 @@
 				box-sizing: border-box;
 				border: 0px;
 				display: block;
-				background: #333;
+				background: var(--color-bg-1);
 				padding: 8px;
 
 				&.checkButton {
 					background: transparent;
 
 					svg {
-						fill: #444;
+						fill: var(--text-color-alt);
 					}
 				}
 
 				&.copyButton {
 					svg {
-						fill: #bbb;
+						fill: var(--text-color-alt);
 					}
 
 					&:hover {
@@ -93,7 +94,7 @@
 					}
 
 					&:active {
-						background: #222;
+						background: var(--color-bg-1);
 						cursor: pointer;
 						svg {
 							fill: #fff;
@@ -123,27 +124,27 @@
 				display: block;
 
 				border: none;
-				border-bottom: 2px solid #222;
+				border-bottom: 2px solid var(--color-bg-1);
 
 				width: 100%;
 				padding: 10px;
 
-				color: #888;
+				color: var(--text-color-tab);
 				text-align: center;
 				font-weight: 700;
 
 				cursor: pointer;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				background-color: #111;
+				background-color: var(--color-bg-0);
 
 				&:hover {
-					color: #ccc;
+					color: var(--text-color-tab-hover);
 				}
 
 				&.selected {
-					background-color: #ffbb4d;
-					color: #333;
+					background-color: var(--color-bg-tab-selected);
+					color: var(--text-color-tab-selected);
 				}
 			}
 		}

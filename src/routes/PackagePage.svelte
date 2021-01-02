@@ -47,7 +47,6 @@
 				<NavLink to="/author/{pkg.author}">by {pkg.author}</NavLink>
 			</h3>
 
-			<!-- <pre><code class="block">{pkg.git}</code></pre> -->
 			<Tags tags={pkg.tags} />
 
 			<p>{pkg.description}</p>
@@ -82,7 +81,6 @@
 
 	h2 {
 		margin: 0;
-		color: #fff;
 		font-size: 40pt;
 	}
 
@@ -104,7 +102,7 @@
 	.install {
 		display: flex;
 
-		border: 2px solid #222;
+		border: 2px solid var(--color-bg-1);
 		border-radius: 5px;
 
 		overflow: hidden;

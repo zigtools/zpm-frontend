@@ -29,26 +29,26 @@
 		position: relative;
 
 		border-radius: 3px;
-		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+		box-shadow: var(--card-shadow);
 		padding: 20px;
 		padding-bottom: 60px;
-		background-color: #1a1a1a;
+		background-color: var(--color-bg-1-alt);
 		overflow: hidden;
 	}
 
 	h2 {
 		margin: 0;
-		color: #ccc;
+		color: var(--text-color-h2);
 		font-size: 14pt;
 
 		:global(a) {
-			color: white;
+			color: var(--text-color-h2);
 		}
 	}
 
 	h3 {
 		margin-top: 0;
-		color: #777;
+		color: var(--text-color-h2);
 		font-size: 12pt;
 		font-weight: 500;
 

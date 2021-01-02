@@ -26,8 +26,13 @@
 	const hash = createHistory(createHashSource());
 </script>
 
-<Router {url} history={hash}>
-	<Navigation/>
+<!-- 
+	We disable svelte/navigator focus managmenent by using primary={false}
+	Otherwise we can't keep the focus on the search input when switching pages
+	More information here: https://github.com/mefechoel/svelte-navigator#router 
+-->
+<Router {url} history={hash} primary={false}>
+	<Navigation />
 	<main>
 		<Route path="/">
 			<Home {fetchData} />

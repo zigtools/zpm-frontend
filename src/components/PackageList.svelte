@@ -12,7 +12,6 @@
 
 	onMount(() => {
 		searchQuery.subscribe((searchValue) => {
-			console.log(packages);
 			if (searchValue == null || searchValue === "") {
 				filtered_packages = packages;
 			} else {
