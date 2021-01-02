@@ -41,7 +41,7 @@
 		{:then pkg}
 			<header>
 				<h2>{pkg.name}</h2>
-				<GitLogo gitUrl={pkg.git} />
+				<GitLogo gitUrl={pkg.git} height="64" />
 			</header>
 			<h3>
 				<NavLink to="/author/{pkg.author}">by {pkg.author}</NavLink>

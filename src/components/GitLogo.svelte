@@ -1,9 +1,10 @@
 <script>
 	export let gitUrl;
+	export let height = 32;
 </script>
 
 <div class={$$props.class}>
-	<a href={gitUrl}>
+	<a href={gitUrl} style="height:{height}px">
 		{#if gitUrl}
 			{#if gitUrl.startsWith('https://github.com')}
 				<svg viewBox="0 0 24 24"><path
@@ -59,8 +60,6 @@
 
 <style>
 	a {
-		box-sizing: border-box;
-		height: 100%;
 		padding: 2px;
 	}
 	svg {
