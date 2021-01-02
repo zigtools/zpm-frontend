@@ -1,12 +1,11 @@
 <script>
-	export let tags;
-
 	import NavLink from "../components/NavLink.svelte";
+	export let tags;
 </script>
 
 <div>
 	{#each tags as tag}
-	<span><NavLink to="/tag/{tag}">{tag}</NavLink></span>
+		<NavLink to="/tag/{tag}"><span>{tag}</span></NavLink>
 	{/each}
 </div>
 
@@ -14,17 +13,18 @@
 	div {
 		display: block;
 
-		&>* {
+		span {
+			&:hover {
+				background-color: var(--color-tag-hover);
+			}
+
 			display: inline-block;
-
 			margin-right: 5px;
-
-			border: 2px solid #ececec;
+			border: 1px solid var(--color-tag-border);
 			border-radius: 5px;
-
-			padding: 7px 12px;
-
+			padding: 5px 10px;
 			font-weight: 600;
+			font-size: 10pt;
 		}
 	}
 </style>

@@ -1,16 +1,36 @@
 <script>
 	import Package from "./Package.svelte";
+	import { onMount } from "svelte";
+	import { searchQuery } from "../stores.js";
 
 	export let packages;
+	packages.sort((a, b) => {
+		return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+	});
+
 	let filtered_packages = packages;
+
+	onMount(() => {
+		searchQuery.subscribe((searchValue) => {
+			if (searchValue == null || searchValue === "") {
+				filtered_packages = packages;
+			} else {
+				filtered_packages = packages.filter(
+					(pkg) =>
+						pkg.name.toLowerCase().indexOf(searchValue) !== -1 ||
+						pkg.description.toLowerCase().indexOf(searchValue) !==
+							-1 ||
+						pkg.tags.indexOf(searchValue) !== -1
+				);
+			}
+		});
+	});
 </script>
 
 <section>
-	<input type="text" placeholder="Search" on:input={e => filtered_packages = packages.filter(_ => _.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1 || _.tags.indexOf(e.target.value) !== -1)}>
-
 	<div class="packages">
 		{#each filtered_packages as pkg}
-			<Package pkg={pkg} />
+			<Package {pkg} />
 		{/each}
 	</div>
 </section>
@@ -18,7 +38,7 @@
 <style lang="scss">
 	.packages {
 		display: grid;
-		gap: 20px;
+		gap: 10px;
 		grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
 		grid-auto-rows: 1fr;
 

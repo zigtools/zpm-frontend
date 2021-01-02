@@ -1,6 +1,6 @@
 <script>
-	import utils from "../utils";
 	import Tags from "./Tags.svelte";
+	import GitLogo from "./GitLogo.svelte";
 	import NavLink from "./NavLink.svelte";
 
 	export let pkg;
@@ -8,21 +8,19 @@
 </script>
 
 <div class="package">
-	<h2>{pkg.name}</h2>
-	<h3>{pkg.author}</h3>
+	<h2>
+		<NavLink to="/package/{pkg.name}">{pkg.name}</NavLink>
+	</h2>
+	<h3>
+		<NavLink to="/author/{pkg.author}">{pkg.author}</NavLink>
+	</h3>
 
 	<p>{pkg.description}</p>
 
-	<Tags tags={pkg.tags} />
+	<GitLogo class="git-logo" gitUrl={pkg.git} />
 
-	<div class="tooltip">
-		{#if pkg.git}
-			<a href={pkg.git}><img src={pkg.git.startsWith("https://github.com") ? "img/github.svg" : "img/git.svg"} alt="git"></a>
-		{/if}
-	</div>
-
-	<div class="actions">
-		<NavLink to="/package/{pkg.name}">Details</NavLink>
+	<div class="tags-container">
+		<Tags tags={pkg.tags} />
 	</div>
 </div>
 
@@ -30,61 +28,62 @@
 	.package {
 		position: relative;
 
-		border: 2px solid #ececec;
-		border-radius: 5px;
-
+		border-radius: 3px;
+		box-shadow: var(--card-shadow);
 		padding: 20px;
 		padding-bottom: 60px;
-
+		background-color: var(--color-bg-1-alt);
 		overflow: hidden;
 	}
 
 	h2 {
 		margin: 0;
+		color: var(--text-color-h2);
+		font-size: 14pt;
 
-		font-size: 18pt;
+		:global(a) {
+			color: var(--text-color-h2);
+		}
 	}
 
 	h3 {
 		margin-top: 0;
-
-		color: #666;
+		color: var(--text-color-h2);
 		font-size: 12pt;
 		font-weight: 500;
+
+		:global(a) {
+			color: #777;
+		}
 	}
 
-	.tooltip {
+	:global(.git-logo) {
 		position: absolute;
 
 		top: 20px;
 		right: 20px;
+		width: 32px;
+		height: 32px;
 
-		&>* {
+		& > * {
 			margin-left: 5px;
-		}
-
-		img {
-			width: 20px;
 		}
 	}
 
-	.actions {
+	.tags-container {
 		position: absolute;
 
 		left: 0px;
 		bottom: 0px;
 
-		border-top: 2px solid #ececec;
-
-		padding: 15px 20px;
+		padding: 10px 10px;
 
 		width: 100%;
 
 		z-index: 2;
-		background-color: white;
 	}
 
-	:global(.actions>*) {
+	:global(.actions > *) {
 		margin-right: 15px;
 
 		font-weight: 700;

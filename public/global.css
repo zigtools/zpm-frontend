@@ -1,147 +1,55 @@
+@import url("dark.css") (prefers-color-scheme: dark);
+@import url("light.css") (prefers-color-scheme: light);
+
 @import url('https://rsms.me/inter/inter.css');
-html, button, input { font-family: 'Inter', sans-serif; }
+
+html,
+button,
+input {
+	font-family: 'Inter', sans-serif;
+}
+
 @supports (font-variation-settings: normal) {
-  html, button, input { font-family: 'Inter var', sans-serif; }
+
+	html,
+	button,
+	input {
+		font-family: 'Inter var', sans-serif;
+	}
 }
 
 * {
 	outline: none;
 }
 
-html, body {
+html,
+body {
 	position: relative;
 }
 
 body {
 	margin: 0;
 	padding: 0;
-
-	color: #333;
-
 	box-sizing: border-box;
+	overflow-y: scroll;
+	background-color: var(--bg-color);
+	color: var(--text-color);
 }
 
 a {
-	color: #06f;
 	text-decoration: none;
-
 	cursor: pointer;
+	color: var(--text-color-a);
 }
 
-input[type=text] {
-	border: 2px solid #ececec;
-	border-radius: 5px;
-
-	padding: 10px 14px;
-
-	font-size: 14pt;
-	font-family: inherit;
-	font-weight: 600;
+h1 {
+	color: var(--text-color-h1);
 }
 
-input[type=text]:focus {
-	border-color: #06f;
+h2 {
+	color: var(--text-color-h2);
 }
 
-/* Syntax highlighting */
-
-/* Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org> */
-
-.hljs, code {
-  border-radius: 3px;
-
-  overflow-x: auto;
-  background: #F0F0F0;
-}
-
-.hljs, code.block {
-	display: block;
-	padding: 20px;
-}
-
-
-/* Base color: saturation 0; */
-
-.hljs,
-.hljs-subst {
-  color: #444;
-}
-
-.hljs-comment {
-  color: #888888;
-}
-
-.hljs-keyword,
-.hljs-attribute,
-.hljs-selector-tag,
-.hljs-meta-keyword,
-.hljs-doctag,
-.hljs-name {
-  font-weight: bold;
-}
-
-
-/* User color: hue: 0 */
-
-.hljs-type,
-.hljs-string,
-.hljs-number,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-quote,
-.hljs-template-tag,
-.hljs-deletion {
-  color: #880000;
-}
-
-.hljs-title,
-.hljs-section {
-  color: #880000;
-  font-weight: bold;
-}
-
-.hljs-regexp,
-.hljs-symbol,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-link,
-.hljs-selector-attr,
-.hljs-selector-pseudo {
-  color: #BC6060;
-}
-
-
-/* Language color: hue: 90; */
-
-.hljs-literal {
-  color: #78A960;
-}
-
-.hljs-built_in,
-.hljs-bullet,
-.hljs-code,
-.hljs-addition {
-  color: #397300;
-}
-
-
-/* Meta color: hue: 200 */
-
-.hljs-meta {
-  color: #1f7199;
-}
-
-.hljs-meta-string {
-  color: #4d99bf;
-}
-
-
-/* Misc effects */
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
+h3 {
+	color: var(--text-color-h3);
 }

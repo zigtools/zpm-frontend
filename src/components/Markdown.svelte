@@ -7,7 +7,9 @@
 	let mdDiv;
 
 	onMount(() => {
-		[...mdDiv.querySelectorAll("pre code")].map(_ => highlight.highlightBlock(_));
+		[...mdDiv.querySelectorAll("pre code")].map((_) =>
+			highlight.highlightBlock(_)
+		);
 	});
 
 	export let md;
@@ -18,6 +20,21 @@
 </div>
 
 <style lang="scss">
+	.md {
+		border: 2px solid var(--color-border-1);
+		background-color: var(--color-bg-0);
+		border-radius: 5px;
+		padding: 20px;
+
+		:global(pre) {
+			background-color: var(--code-block-background);
+			border: var(--code-block-border);
+			padding: 20px;
+			border-radius: 5px;
+			font-size: 10pt;
+		}
+	}
+
 	:global(.md) {
 		line-height: 2;
 	}
