@@ -16,3 +16,4 @@ npm install
 npm run dev 
 ```
 
+After running `npm run build`, serve the contents of the `./public` folder.
