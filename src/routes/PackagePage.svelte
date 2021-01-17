@@ -14,6 +14,25 @@
 		return (await fetchData).find((_) => _.name === id);
 	}
 
+	async function getMainBranch(pkg) {
+		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
+			return (
+				(
+					await (
+						await fetch(
+							`https://api.github.com/repos/${pkg.git.replace(
+								"https://github.com/",
+								""
+							)}`
+						)
+					).json()
+				).default_branch
+			);
+		}
+
+		return;
+	}
+
 	async function fetchReadme(pkg) {
 		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
 			return utils.atobUnicode(
@@ -60,7 +79,15 @@
 			{#await fetchReadme(pkg)}
 				<h1>Fetching Readme</h1>
 			{:then readme}
-				<Markdown md={readme} />
+				{#if pkg.git && pkg.git.startsWith("https://github.com/")}
+					{#await getMainBranch(pkg)}
+						<h1>Fetching Readme</h1>
+					{:then branch}
+						<Markdown md={readme} baseUrl={`${pkg.git}/blob/${branch}/`} />
+					{/await}
+				{:else}
+					<Markdown md={readme} />
+				{/if}
 			{/await}
 		{:catch error}
 			<p>Error: <code>{error}</code></p>

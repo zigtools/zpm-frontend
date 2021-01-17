@@ -13,6 +13,10 @@
 	});
 
 	export let md;
+	export let baseUrl;
+	marked.setOptions({
+		baseUrl
+	});
 </script>
 
 <div class="md" bind:this={mdDiv}>
