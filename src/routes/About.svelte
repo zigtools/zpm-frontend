@@ -15,7 +15,7 @@
 
 	<h3>What package managers are available?</h3>
 
-	<p>Currently, only <a href="https://github.com/mattnite/zkg/">zkg</a> can install packages from the repository. There are plans to make <a href="https://github.com/zigtools/zpm">zpm</a> also support package installation via CLI.<p>
+	<p>Currently, only <a href="https://github.com/nektro/zigmod">zigmod</a> and <a href="https://github.com/mattnite/zkg">zkg</a> can install packages from the repository. There are plans to make <a href="https://github.com/zigtools/zpm">zpm</a> also support package installation via CLI.<p>
 	<p>If you don't want to use a tool, you can also just create a flat copy in your project or add the packages as a <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">git submodule</a>.</p>
 
 	<h3>How can I integrate zpm with my package mananger or frontend?</h3>
