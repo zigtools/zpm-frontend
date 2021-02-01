@@ -10,7 +10,7 @@ export function tabsFromPackage(pkg) {
 		"submodules": pkg.git ? `git submodule add ${pkg.git} ${pkg.name}` : undefined,
 		"clone": pkg.git ? `git clone ${pkg.git}` : undefined,
 		"zkg": `zkg add ${pkg.name}`,
-		"zigmod": `zigmod zpm add ${pkg.name}`,
+		"zigmod": `# Requires v26 or later\nzigmod zpm add ${pkg.name}`,
 	};
 }
 
