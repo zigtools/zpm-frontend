@@ -21,7 +21,6 @@
 			}
 
 			display: inline-block;
-			margin-right: 5px;
 			border: 1px solid var(--color-tag-border);
 			border-radius: 5px;
 			padding: 5px 10px;
