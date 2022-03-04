@@ -9,8 +9,28 @@
 	});
 
 	let filtered_packages = packages;
+	let list_limit = 30;
+
+	function handleScroll() {
+		window.onscroll = () => {
+			let bottomOfWindow =
+				Math.max(
+					window.pageYOffset,
+					document.documentElement.scrollTop,
+					document.body.scrollTop
+				) +
+					window.innerHeight ===
+				document.documentElement.offsetHeight;
+
+			if (bottomOfWindow) {
+				list_limit += 30;
+			}
+		};
+	}
 
 	onMount(() => {
+		handleScroll();
+
 		searchQuery.subscribe((searchValue) => {
 			if (searchValue == null || searchValue === "") {
 				filtered_packages = packages;
@@ -22,6 +42,7 @@
 							-1 ||
 						pkg.tags.indexOf(searchValue) !== -1
 				);
+				list_limit = 30;
 			}
 		});
 	});
@@ -29,7 +50,7 @@
 
 <section>
 	<div class="packages">
-		{#each filtered_packages as pkg}
+		{#each filtered_packages.slice(0, list_limit) as pkg}
 			<Package {pkg} />
 		{/each}
 	</div>
