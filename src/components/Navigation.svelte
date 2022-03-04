@@ -28,7 +28,7 @@
 
 <div class="container">
 	<nav>
-		<NavLink to="/"><img src="img/zpm.svg" alt="logo" /></NavLink>
+		<NavLink to="/"><img src="/img/zpm.svg" alt="logo" /></NavLink>
 		<input
 			bind:this={inputRef}
 			on:input={onSearchInput}
