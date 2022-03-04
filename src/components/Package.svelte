@@ -27,8 +27,7 @@
 <style lang="scss">
 	.package {
 		position: relative;
-
-		border-radius: 3px;
+		border-radius: 8px;
 		box-shadow: var(--card-shadow);
 		padding: 20px;
 		padding-bottom: 60px;
