@@ -29,19 +29,28 @@
 <div class="container">
 	<nav>
 		<NavLink to="/"><img src="img/zpm.svg" alt="logo" /></NavLink>
-		<div class="items">
-			<input
-				bind:this={inputRef}
-				on:input={onSearchInput}
-				type="text"
-				placeholder="Press 's' to search" />
-			<NavLink to="/about">About</NavLink>
-		</div>
+		<input
+			bind:this={inputRef}
+			on:input={onSearchInput}
+			type="text"
+			placeholder="Press 's' to search"
+		/>
+		<NavLink to="/about">About</NavLink>
 	</nav>
 </div>
 
 <style lang="scss">
 	nav {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		max-width: 1280px;
+		margin: auto;
+		padding: 10px;
+		font-weight: 700;
+		box-sizing: border-box;
+
 		:global(a) {
 			color: var(--text-color-a-alt);
 		}
@@ -77,20 +86,5 @@
 		width: 100%;
 		padding-bottom: 0;
 		display: inline-block;
-	}
-
-	nav {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		max-width: 1280px;
-		margin: auto;
-		padding: 20px;
-		box-sizing: border-box;
-	}
-
-	:global(nav .items > *) {
-		font-weight: 700;
-		margin-left: 20px;
 	}
 </style>
