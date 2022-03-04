@@ -4,9 +4,12 @@
 </script>
 
 <div>
-	{#each tags as tag}
+	{#each tags.slice(0, 4) as tag}
 		<NavLink to="/tag/{tag}"><span>{tag}</span></NavLink>
 	{/each}
+	{#if tags.length > 4}
+		<p title={tags.slice(4).join(" ")}>...</p>
+	{/if}
 </div>
 
 <style lang="scss">
@@ -26,6 +29,12 @@
 			padding: 5px 10px;
 			font-weight: 600;
 			font-size: 10pt;
+		}
+
+		p {
+			cursor: default;
+			margin: 0;
+			color: var(--text-color-a);
 		}
 	}
 </style>
