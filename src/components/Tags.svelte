@@ -11,7 +11,9 @@
 
 <style lang="scss">
 	div {
-		display: block;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 5px;
 
 		span {
 			&:hover {
