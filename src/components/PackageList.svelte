@@ -1,5 +1,6 @@
 <script>
 	import Package from "./Package.svelte";
+	import Fuse from "fuse.js";
 	import { onMount } from "svelte";
 	import { searchQuery } from "../stores.js";
 
@@ -9,19 +10,41 @@
 	});
 
 	let filtered_packages = packages;
+	let list_limit = 30;
+
+	function handleScroll() {
+		window.onscroll = () => {
+			let bottomOfWindow =
+				Math.max(
+					window.pageYOffset,
+					document.documentElement.scrollTop,
+					document.body.scrollTop
+				) +
+					window.innerHeight ===
+				document.documentElement.offsetHeight;
+
+			if (bottomOfWindow) {
+				list_limit += 30;
+			}
+		};
+	}
 
 	onMount(() => {
+		handleScroll();
+
 		searchQuery.subscribe((searchValue) => {
 			if (searchValue == null || searchValue === "") {
 				filtered_packages = packages;
 			} else {
-				filtered_packages = packages.filter(
-					(pkg) =>
-						pkg.name.toLowerCase().indexOf(searchValue) !== -1 ||
-						pkg.description.toLowerCase().indexOf(searchValue) !==
-							-1 ||
-						pkg.tags.indexOf(searchValue) !== -1
-				);
+				const fuse = new Fuse(packages, {
+					keys: ["name", "author", "description"],
+					includeScore: true,
+				});
+				const result = fuse.search(searchValue || "");
+				filtered_packages = result
+					.filter((x) => x.score <= 0.2)
+					.map((x) => x.item);
+				list_limit = 30;
 			}
 		});
 	});
@@ -29,7 +52,7 @@
 
 <section>
 	<div class="packages">
-		{#each filtered_packages as pkg}
+		{#each filtered_packages.slice(0, list_limit) as pkg}
 			<Package {pkg} />
 		{/each}
 	</div>

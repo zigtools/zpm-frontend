@@ -31,7 +31,7 @@
 	Otherwise we can't keep the focus on the search input when switching pages
 	More information here: https://github.com/mefechoel/svelte-navigator#router 
 -->
-<Router {url} history={hash} primary={false}>
+<Router {url} primary={false}>
 	<Navigation />
 	<main>
 		<Route path="/">

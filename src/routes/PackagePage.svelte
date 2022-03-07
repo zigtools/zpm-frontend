@@ -1,9 +1,8 @@
 <script>
-	import { Router, Route, createHistory } from "svelte-navigator";
-	import utils from "../utils";
+	import { Route } from "svelte-navigator";
 
-	import Tabs from "../components/Tabs.svelte";
 	import Tags from "../components/Tags.svelte";
+	import Copy from "../components/Copy.svelte";
 	import Markdown from "../components/Markdown.svelte";
 	import NavLink from "../components/NavLink.svelte";
 	import GitLogo from "../components/GitLogo.svelte";
@@ -15,41 +14,70 @@
 	}
 
 	async function getMainBranch(pkg) {
-		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
+		if (isHostedOnGithub(pkg)) {
 			return (
-				(
-					await (
-						await fetch(
-							`https://api.github.com/repos/${pkg.git.replace(
-								"https://github.com/",
-								""
-							)}`
-						)
-					).json()
-				).default_branch
-			);
+				await (
+					await fetch(
+						`https://api.github.com/repos/${pkg.links[
+							"github"
+						].replace("https://github.com/", "")}`
+					)
+				).json()
+			).default_branch;
 		}
 
 		return;
 	}
 
 	async function fetchReadme(pkg) {
-		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
-			return utils.atobUnicode(
-				(
-					await (
-						await fetch(
-							`https://api.github.com/repos/${pkg.git.replace(
-								"https://github.com/",
-								""
-							)}/readme`
-						)
-					).json()
-				).content
-			);
+		if (isHostedOnGithub(pkg)) {
+			return await (
+				await fetch(
+					`https://api.github.com/repos/${pkg.links["github"].replace(
+						"https://github.com/",
+						""
+					)}/readme`,
+					{
+						headers: {
+							accept: "application/vnd.github.VERSION.raw",
+						},
+					}
+				)
+			).text();
 		}
 
 		return;
+	}
+
+	function getContentBaseURL(pkg, default_branch) {
+		if (isHostedOnGithub(pkg)) {
+			return `https://raw.githubusercontent.com/${pkg.links[
+				"github"
+			].replace("https://github.com/", "")}/${default_branch}/`;
+		}
+
+		return;
+	}
+
+	function packageLinks(pkg) {
+		const rename_list = { github: "Github", aquila: "aquila.red" };
+		let links = Object.assign({}, pkg.links);
+		Object.keys(links)
+			.filter((key) => Object.keys(rename_list).includes(key))
+			.forEach((key) => {
+				links[rename_list[key]] = links[key];
+				delete links[key];
+			});
+
+		Object.keys(links).forEach(
+			(key) => links[key] == null && delete links[key]
+		);
+
+		return links;
+	}
+
+	function isHostedOnGithub(pkg) {
+		return pkg.links.github && pkg.git.startsWith("https://github.com/");
 	}
 </script>
 
@@ -70,20 +98,31 @@
 
 			<p>{pkg.description}</p>
 
-			<div class="install">
-				<Tabs tabs={utils.tabsFromPackage(pkg)} />
+			<div class="git-url">
+				<p>Git</p>
+				<div>{pkg.git} <Copy data={pkg.git} /></div>
 			</div>
 
-			<div class="sep" />
+			{#if Object.keys(packageLinks(pkg)).length}
+				<div class="package-links">
+					<p>View on:</p>
+					{#each Object.entries(packageLinks(pkg)) as [key, value]}
+						<p>[ <a href={value}>{key}</a> ]</p>
+					{/each}
+				</div>
+			{/if}
 
 			{#await fetchReadme(pkg)}
 				<h1>Fetching Readme</h1>
 			{:then readme}
-				{#if pkg.git && pkg.git.startsWith("https://github.com/")}
+				{#if isHostedOnGithub(pkg)}
 					{#await getMainBranch(pkg)}
 						<h1>Fetching Readme</h1>
 					{:then branch}
-						<Markdown md={readme} baseUrl={`${pkg.git}/blob/${branch}/`} />
+						<Markdown
+							md={readme}
+							baseUrl={getContentBaseURL(pkg, branch)}
+						/>
 					{/await}
 				{:else}
 					<Markdown md={readme} />
@@ -106,6 +145,40 @@
 		padding: 20px;
 	}
 
+	.git-url {
+		display: flex;
+		overflow: hidden;
+		border-radius: 8px;
+		border: var(--code-block-border);
+		margin-bottom: 10px;
+
+		p {
+			background-color: var(--color-bg-1);
+			padding: 10px;
+			margin: 0;
+			color: var(--text-color-alt);
+		}
+
+		div {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: var(--code-block-background);
+			padding: 5px;
+			flex: 1 1 0%;
+		}
+	}
+
+	.package-links {
+		margin-bottom: 10px;
+
+		p {
+			display: inline-block;
+			margin: 0;
+			font-weight: 600;
+		}
+	}
+
 	h2 {
 		margin: 0;
 		font-size: 40pt;
@@ -124,23 +197,5 @@
 
 	p {
 		font-size: 14pt;
-	}
-
-	.install {
-		display: flex;
-
-		border: 2px solid var(--color-bg-1);
-		border-radius: 5px;
-
-		overflow: hidden;
-	}
-
-	.sep {
-		margin-top: 20px;
-
-		border-radius: 5px;
-
-		width: 100%;
-		height: 3px;
 	}
 </style>

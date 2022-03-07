@@ -4,20 +4,22 @@
 	import NavLink from "./NavLink.svelte";
 
 	export let pkg;
-	let expanded = false;
 </script>
 
 <div class="package">
-	<h2>
-		<NavLink to="/package/{pkg.name}">{pkg.name}</NavLink>
-	</h2>
-	<h3>
-		<NavLink to="/author/{pkg.author}">{pkg.author}</NavLink>
-	</h3>
+	<div class="head">
+		<div>
+			<h2>
+				<NavLink to="/package/{pkg.name}">{pkg.name}</NavLink>
+			</h2>
+			<h3>
+				<NavLink to="/author/{pkg.author}">{pkg.author}</NavLink>
+			</h3>
+		</div>
+		<GitLogo gitUrl={pkg.git} />
+	</div>
 
 	<p>{pkg.description}</p>
-
-	<GitLogo class="git-logo" gitUrl={pkg.git} />
 
 	<div class="tags-container">
 		<Tags tags={pkg.tags} />
@@ -26,14 +28,16 @@
 
 <style lang="scss">
 	.package {
-		position: relative;
-
-		border-radius: 3px;
+		border-radius: 8px;
 		box-shadow: var(--card-shadow);
-		padding: 20px;
-		padding-bottom: 60px;
+		padding: 15px;
 		background-color: var(--color-bg-1-alt);
 		overflow: hidden;
+	}
+
+	.head {
+		display: flex;
+		justify-content: space-between;
 	}
 
 	h2 {
@@ -57,26 +61,9 @@
 		}
 	}
 
-	:global(.git-logo) {
-		position: absolute;
-
-		top: 20px;
-		right: 20px;
-		width: 32px;
-		height: 32px;
-
-		& > * {
-			margin-left: 5px;
-		}
-	}
-
 	.tags-container {
-		position: absolute;
-
 		left: 0px;
 		bottom: 0px;
-
-		padding: 10px 10px;
 
 		width: 100%;
 
