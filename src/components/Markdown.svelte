@@ -15,7 +15,7 @@
 	export let md;
 	export let baseUrl;
 	marked.setOptions({
-		baseUrl
+		baseUrl,
 	});
 </script>
 
@@ -25,6 +25,7 @@
 
 <style lang="scss">
 	.md {
+		overflow: auto;
 		border: 2px solid var(--color-border-1);
 		background-color: var(--color-bg-0);
 		border-radius: 5px;

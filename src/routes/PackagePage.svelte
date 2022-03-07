@@ -1,6 +1,5 @@
 <script>
-	import { Router, Route, createHistory } from "svelte-navigator";
-	import utils from "../utils";
+	import { Route } from "svelte-navigator";
 
 	import Tags from "../components/Tags.svelte";
 	import Copy from "../components/Copy.svelte";
@@ -15,14 +14,13 @@
 	}
 
 	async function getMainBranch(pkg) {
-		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
+		if (isHostedOnGithub(pkg)) {
 			return (
 				await (
 					await fetch(
-						`https://api.github.com/repos/${pkg.git.replace(
-							"https://github.com/",
-							""
-						)}`
+						`https://api.github.com/repos/${pkg.links[
+							"github"
+						].replace("https://github.com/", "")}`
 					)
 				).json()
 			).default_branch;
@@ -32,19 +30,30 @@
 	}
 
 	async function fetchReadme(pkg) {
-		if (pkg.git && pkg.git.startsWith("https://github.com/")) {
-			return utils.atobUnicode(
-				(
-					await (
-						await fetch(
-							`https://api.github.com/repos/${pkg.git.replace(
-								"https://github.com/",
-								""
-							)}/readme`
-						)
-					).json()
-				).content
-			);
+		if (isHostedOnGithub(pkg)) {
+			return await (
+				await fetch(
+					`https://api.github.com/repos/${pkg.links["github"].replace(
+						"https://github.com/",
+						""
+					)}/readme`,
+					{
+						headers: {
+							accept: "application/vnd.github.VERSION.raw",
+						},
+					}
+				)
+			).text();
+		}
+
+		return;
+	}
+
+	function getContentBaseURL(pkg, default_branch) {
+		if (isHostedOnGithub(pkg)) {
+			return `https://raw.githubusercontent.com/${pkg.links[
+				"github"
+			].replace("https://github.com/", "")}/${default_branch}/`;
 		}
 
 		return;
@@ -52,7 +61,7 @@
 
 	function packageLinks(pkg) {
 		const rename_list = { github: "Github", aquila: "aquila.red" };
-		let links = pkg.links;
+		let links = Object.assign({}, pkg.links);
 		Object.keys(links)
 			.filter((key) => Object.keys(rename_list).includes(key))
 			.forEach((key) => {
@@ -65,6 +74,10 @@
 		);
 
 		return links;
+	}
+
+	function isHostedOnGithub(pkg) {
+		return pkg.links.github && pkg.git.startsWith("https://github.com/");
 	}
 </script>
 
@@ -102,13 +115,13 @@
 			{#await fetchReadme(pkg)}
 				<h1>Fetching Readme</h1>
 			{:then readme}
-				{#if pkg.git && pkg.git.startsWith("https://github.com/")}
+				{#if isHostedOnGithub(pkg)}
 					{#await getMainBranch(pkg)}
 						<h1>Fetching Readme</h1>
 					{:then branch}
 						<Markdown
 							md={readme}
-							baseUrl={`${pkg.git}/blob/${branch}/`}
+							baseUrl={getContentBaseURL(pkg, branch)}
 						/>
 					{/await}
 				{:else}
