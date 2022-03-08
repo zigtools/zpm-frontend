@@ -9,16 +9,12 @@
 	import createHashSource from "./hashHistory.js";
 
 	let fetchData = (async () => {
-		const response = await fetch(
-			"https://zpm.random-projects.net/api/packages"
-		);
+		const response = await fetch("https://zig.pm/api/packages");
 		return await response.json();
 	})();
 
 	let fetchTags = (async () => {
-		const response = await fetch(
-			"https://zpm.random-projects.net/api/tags"
-		);
+		const response = await fetch("https://zig.pm/api/tags");
 		return await response.json();
 	})();
 
