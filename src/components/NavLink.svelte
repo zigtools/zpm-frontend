@@ -1,5 +1,8 @@
 <script>
 	import { Link } from "svelte-navigator";
+	import { createEventDispatcher } from "svelte";
+
+	const dispatch = createEventDispatcher();
 
 	export let to = "";
 
@@ -13,9 +16,13 @@
 		}
 		return {};
 	}
+
+	function clickHandle() {
+		dispatch("click");
+	}
 </script>
 
-<Link {to} {getProps}>
+<Link on:click={clickHandle} {to} {getProps}>
 	<slot />
 </Link>
 
