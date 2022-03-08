@@ -5,12 +5,13 @@
 	import { useLocation } from "svelte-navigator";
 
 	let inputRef;
+	let inputVal;
 
 	const navigate = useNavigate();
 	let location = useLocation();
 
 	async function onSearchInput(e) {
-		searchQuery.set(e.target.value);
+		searchQuery.set(inputVal);
 		if ($location.pathname != "/") {
 			navigate("/", { state: { shouldFocusSearch: true } });
 		}
@@ -22,15 +23,23 @@
 			e.preventDefault();
 		}
 	}
+
+	function handleHomeLink(e) {
+		searchQuery.set(null);
+		inputVal = null;
+	}
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="container">
 	<nav>
-		<NavLink to="/"><img src="/img/zpm.svg" alt="logo" /></NavLink>
+		<NavLink to="/" on:click={handleHomeLink}
+			><img src="/img/zpm.svg" alt="logo" /></NavLink
+		>
 		<input
 			bind:this={inputRef}
+			bind:value={inputVal}
 			on:input={onSearchInput}
 			type="text"
 			placeholder="Press 's' to search"
